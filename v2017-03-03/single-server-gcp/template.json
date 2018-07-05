@@ -3,7 +3,7 @@
     "gcp": {
        "cred": "your-credential-name-in-alm",
        "region": "asia-northeast1",
-       "project_id": "GCP-project id"
+       "project_id": "GCP-project-id"
       }
   },
   "configurations": [

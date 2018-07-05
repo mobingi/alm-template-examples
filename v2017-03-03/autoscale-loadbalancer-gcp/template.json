@@ -1,0 +1,84 @@
+{
+  "version": "2017-03-03",
+  "label": "example template version label #1",
+  "description": "Multi-layer and single server GCP deployment all in one template.",
+  "vendor": {
+    "gcp": {
+      "cred": "your-credential-name-in-alm",
+      "region": "asia-northeast1",
+      "project_id": "GCP-project-id"
+    }
+  },
+  "configurations": [
+    {
+      "role": "web",
+      "flag": "layer1-autoscale",
+      "provision": {
+        "availability_zone": "asia-northeast1-a",
+        "instance_type": "g1-small",
+        "keypair": true,
+        "subnet": {
+          "cidr": "10.0.2.0/24",
+          "public": true,
+          "auto_assign_public_ip": true
+        },
+        "security_group": {
+          "ingress": [
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 80,
+              "ip_protocol": "tcp",
+              "to_port": 80
+            },
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 443,
+              "ip_protocol": "tcp",
+              "to_port": 443
+            },
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 22,
+              "ip_protocol": "tcp",
+              "to_port": 22
+            }
+          ]
+        },
+        "auto_scaling": {
+          "min": 2,
+          "max": 4,
+          "spot_to_ondemand_ratio": 50,
+          "cooldown": "360",
+          "healthcheck_grace_period": "360",
+          "availability_zones": "asia-northeast1-a"
+        },
+        "load_balancer": {
+          "scheme": "internet-facing",
+          "listeners": [
+            {
+              "load_balancer_port": "80",
+              "instance_port": "80",
+              "protocol": "HTTP"
+            }
+          ],
+          "health_check": {
+            "healthy_threshold": "2",
+            "interval": "10",
+            "target": "TCP:80",
+            "timeout": "5",
+            "unhealthy_threshold": "10"
+          }
+        }
+      },
+      "container": {
+        "container_image": "mobingi/ubuntu-apache2-php7:7.2",
+        "container_git_repo": "https://github.com/mobingilabs/default-site-php.git",
+        "container_git_reference": "master",
+        "container_code_dir": "/var/www/html",
+        "container_ports": [
+          80
+        ]
+      }
+    }
+  ]
+}
