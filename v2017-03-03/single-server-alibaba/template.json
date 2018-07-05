@@ -1,0 +1,37 @@
+{
+  "version": "2017-03-03",
+  "label": "Alibaba Cloud Sample ALM Template",
+  "description": "Creates a stack with 2 ECS instance",
+  "vendor": {
+    "alicloud": {
+      "cred": "your-credential-name-in-alm",
+      "region": "ap-northeast-1"
+    }
+  },
+  "configurations": [
+    {
+      "role": "web",
+      "flag": "testflag",
+      "provision": {
+        "instance_type": "ecs.xn4.small",
+        "instance_count": 2,
+        "keypair": true,
+        "subnet":{
+          "cidr":"10.0.1.0/24",
+          "public":true,
+          "auto_assign_public_ip":true
+        },
+        "availability_zone": "ap-northeast-1a"
+      },
+      "container": {
+        "container_image":"mobingi/ubuntu-apache2-php7:7.2",
+        "container_git_repo":"https://github.com/mobingilabs/default-site-php.git",
+        "container_git_reference":"master",
+        "container_code_dir":"/var/www/html",
+        "container_ports":[
+          80
+        ]
+      }
+    }
+  ]
+}
