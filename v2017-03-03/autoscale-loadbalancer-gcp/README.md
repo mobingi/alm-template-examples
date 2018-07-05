@@ -1,0 +1,1 @@
+This template creates two autoscaling groups, one for normal instances, another one for preemptible instances, behind a loadbalancer inside the `default` public network with ports 80, 443, and 22 opened. 
