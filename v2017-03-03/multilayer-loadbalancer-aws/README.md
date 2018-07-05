@@ -1,0 +1,1 @@
+This template creates a stack that has four application loadbalancers (ALBs) with HTTPS connection and ACM SSL certificate enabled, with each pointing to two different subnets, and assigned to an autoscaling group with both on-demand and spot instances supported, together with customized security group settings.
