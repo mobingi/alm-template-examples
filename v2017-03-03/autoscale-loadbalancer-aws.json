@@ -1,0 +1,50 @@
+{
+  "version": "2017-03-03",
+  "label": "template_01",
+  "description": "This template creates a sample stack with ELB enabled with single AZ on AWS",
+  "vendor": {
+    "aws": {
+      "cred": "change this to your AWS Security Key ID",
+      "region": "ap-northeast-1"
+    }
+  },
+  "configurations": [
+    {
+      "role": "web",
+      "flag": "Web01",
+      "provision": {
+        "availability_zone": "ap-northeast-1c",
+        "instance_type": "m3.medium",
+        "subnet": {
+          "cidr": "10.0.2.0/24",
+          "public": true,
+          "auto_assign_public_ip": true
+        },
+        "auto_scaling": {
+          "min": 2,
+          "max": 4,
+          "cooldown": "360",
+          "healthcheck_grace_period": "360",
+          "availability_zones": "ap-northeast-1c"
+        },
+        "load_balancer": {
+          "scheme": "internet-facing",
+          "listeners": [
+            {
+              "load_balancer_port": "80",
+              "instance_port": "80",
+              "protocol": "HTTP"
+            }
+          ],
+          "health_check": {
+            "healthy_threshold": "2",
+            "interval": "10",
+            "target": "TCP:80",
+            "timeout": "5",
+            "unhealthy_threshold": "10"
+          }
+        }
+      }
+    }
+  ]
+}

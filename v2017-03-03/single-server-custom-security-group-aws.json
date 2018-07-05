@@ -1,0 +1,64 @@
+{
+  "version": "2017-03-03",
+  "label": "template version label #1",
+  "description": "This template creates a sample stack with EC2 instance on AWS",
+  "vendor": {
+    "aws": {
+      "cred": "change this to your AWS Security Key ID",
+      "region": "ap-northeast-1"
+    }
+  },
+  "configurations": [
+    {
+      "role": "web",
+      "flag": "Single1",
+      "provision": {
+        "availability_zone": "ap-northeast-1c",
+        "instance_type": "t2.micro",
+        "instance_count": 1,
+        "keypair": false,
+        "subnet": {
+          "cidr": "10.0.1.0/24",
+          "public": true,
+          "auto_assign_public_ip": true
+        },
+        "security_group": {
+          "ingress": [
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 80,
+              "ip_protocol": "tcp",
+              "to_port": 80
+            },
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 443,
+              "ip_protocol": "tcp",
+              "to_port": 443
+            },
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 4243,
+              "ip_protocol": "tcp",
+              "to_port": 4243
+            },
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 22,
+              "ip_protocol": "tcp",
+              "to_port": 22
+            }
+          ],
+          "egress": [
+            {
+              "cidr_ip": "0.0.0.0/0",
+              "from_port": 0,
+              "ip_protocol": "-1",
+              "to_port": 65535
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
