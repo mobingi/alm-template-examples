@@ -12,7 +12,7 @@
   "configurations": [
     {
       "role": "web",
-      "flag": "layer1-autoscale",
+      "flag": "autoscaleflag",
       "provision": {
         "availability_zone": "asia-northeast1-a",
         "instance_type": "g1-small",
